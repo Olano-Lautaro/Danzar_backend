@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('item_payments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger("item_id")->nullable();
-            $table->unsignedBigInteger("payment_id")->nullable();
+            $table->unsignedBigInteger("item_id");
+            $table->unsignedBigInteger("payment_id");
             $table->integer("amount");
             $table->timestamps();
         });

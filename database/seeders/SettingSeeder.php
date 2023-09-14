@@ -8,24 +8,17 @@ use Illuminate\Support\Facades\DB;
 
 class SettingSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
-    {
-        //
-        DB::table('settings')->insert([
-          'name'=> 'primer dia de vencimiento',
-        ]);
 
-        DB::table('settings')->insert([
-          'name'=> 'segundo dia de vencimiento',
-        ]);
+  public function run(): void
+  {
 
-        DB::table('settings')->insert([
-          'name'=> 'tercer dia de vencimiento',
-        ]);
+    DB::table('settings')->insert([
+      'name'=> 'Primer vencimiento',
+    ]);
 
-        
-    }
+    DB::table('settings')->insert([
+      'name'=> 'Segundo vencimiento',
+    ]);
+       
+  }
 }
