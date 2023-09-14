@@ -12,7 +12,9 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $payments= Payment::all();
+
+        return $payments->toJson();
     }
 
     /**
@@ -28,31 +30,51 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'student_id' => 'required',
+            'date' => 'required',
+            'invoice_number' => 'required'
+        ]);
+
+        $payment = Payment::create([
+            'student_id' => $request-> student_id,
+            'date' => $request-> date,
+            'invoice_number' => $request-> invoice_number,
+        ]);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Payment $payment)
+    public function show(string $id)
     {
-        //
+        $payment = Payment::where('id', $id)->get();
+
+        return $payment->toJson();
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Payment $payment)
+    public function edit(string $id)
     {
-        //
+        $payment = Payment::where('id', $id)->get();
+        
+        return $payment->toJson();
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Payment $payment)
+    public function update(Request $request, string $id)
     {
-        //
+        $payment = Payment::find($id);
+
+        $payment->student_id = $request->student_id;
+        $payment->date = $request->date;
+        $payment-> invoice_number = $request->invoice_number;
+
+        $payment->save();
     }
 
     /**
@@ -60,6 +82,6 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-        //
+        $payment_delete = Payment::destroy($payment);
     }
 }
