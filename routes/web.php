@@ -5,19 +5,22 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\TutorController;
+use App\Models\Payment;
 
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-/////////CORS, TESTING BAUTISTA////////////////////////////////////////
+
 function headerCors ( $response ){
     $response->header('Access-Control-Allow-Origin', '*');
     $response->header('Access-Control-Allow-Methods', 'GET');
-    $response->header('Access-Control-Allow-Headers', 'Content-Type');
+     $response->header('Access-Control-Allow-Headers', 'Content-Type');
 }
-///////////////////////////////////////////////////////////////////////
+
 
 //TESTING BAUTISTA.
 Route::get('/paymentjson',function (){
@@ -28,15 +31,15 @@ Route::get('/paymentjson',function (){
 })->name('paymentjson'); 
 
 Route::get('/token',function() {
-    return csrf_token();
+    dd('llego');
 });
 
+Route::resource('payments', PaymentController::class);
+
 Route::resource('categories', CategoryController::class);
-///////////////////////////////////////////////////////////////////////
-
-//TESTING GIANELLA.
-
 
 Route::resource('students', StudentController::class);
 
-///////////////////////////////////////////////////////////////////////
+Route::resource('settings', SettingController::class);
+
+Route::resource('Tutors', TutorController::class);
