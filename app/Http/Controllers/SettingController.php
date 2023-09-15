@@ -61,6 +61,6 @@ class SettingController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $setting = Setting::destroy($id);
     }
 }
