@@ -58,7 +58,9 @@ class StudentController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $student = Student::where('id', $id)->get();
+
+        return $student->toJson();
     }
 
     /**
