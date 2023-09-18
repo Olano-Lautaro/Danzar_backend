@@ -17,7 +17,7 @@ class ItemController extends Controller
     {
         $items= Item::all(); 
 
-        // $sql = 'SELECT * FROM items ';
+        // $sql = 'SELECT * FROM items';
 
         // $items= DB::select($sql);
 
@@ -78,7 +78,7 @@ class ItemController extends Controller
         $item= Item::find($id);
 
         $item-> name = $request->name;
-        $item-> amout = $request->amount;
+        $item-> amount = $request->amount;
 
         $item->save();
 
