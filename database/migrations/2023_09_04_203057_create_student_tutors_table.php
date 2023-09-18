@@ -14,6 +14,11 @@ return new class extends Migration
         Schema::create('student_tutors', function (Blueprint $table) {
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('tutor_id');
+
+            $table->foreign('student_id')->references('id')->on('students');
+            $table->foreign('tutor_id')->references('id')->on('tutors');
+
+
             $table->primary(['student_id' , 'tutor_id']);
             $table->timestamps();
         });

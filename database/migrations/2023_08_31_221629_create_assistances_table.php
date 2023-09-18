@@ -15,6 +15,10 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('item_id');
+
+            $table->foreign('student_id')->references('id')->on('students');
+            $table->foreign('item_id')->references('id')->on('items');
+            
             $table->timestamps();
         });
     }

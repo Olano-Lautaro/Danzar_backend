@@ -17,9 +17,14 @@ class Tutor extends Model
         'phone_number',
         'dni',                                           
     ];
-    public function students(): BelongsToMany
-{
-    return $this->belongsToMany(Tutor::class,"student_tutors");
-}
+    
+        // public function students(): BelongsToMany
+        // {
+        //     return $this->belongsToMany(Tutor::class,"student_tutors");
+        // }
+
+    public function students():BelongsToMany { 
+        return $this->belongsToMany(Student::class);
+    }
 }
 

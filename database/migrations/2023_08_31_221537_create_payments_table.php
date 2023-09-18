@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('student_id')->nullable();
+            $table->unsignedBigInteger('student_id');
             $table->date("date");
             $table->integer("invoice_number"); //numero de factura o recibo
+
+            $table->foreign('student_id')->references('id')->on('students');
             $table->timestamps();
         });
     }

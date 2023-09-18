@@ -16,6 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger("item_id");
             $table->unsignedBigInteger("payment_id");
             $table->integer("amount");
+
+            $table->foreign('item_id')->references('id')->on('items');
+            $table->foreign('payment_id')->references('id')->on('payments');
+
             $table->timestamps();
         });
     }
