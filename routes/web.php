@@ -33,7 +33,7 @@ Route::get('/paymentjson',function (){
 })->name('paymentjson'); 
 
 Route::get('/token',function() {
-    dd('llego');
+    return csrf_token();
 });
 
 

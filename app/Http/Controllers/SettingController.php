@@ -13,7 +13,8 @@ class SettingController extends Controller
     public function index()
     {
         $setting= Setting::All();
-        return $setting;
+        
+        return $setting->toJson();
     }
 
     /**
@@ -30,6 +31,13 @@ class SettingController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            "name"=>'required',
+        ]);
+
+        $setting= Setting::create([
+            'name' => $request->name,
+        ]);
     }
 
     /**
@@ -38,6 +46,9 @@ class SettingController extends Controller
     public function show(string $id)
     {
         //
+        $setting= Setting::where('id', $id)->get();
+        
+        return $setting->toJson();
     }
 
     /**
@@ -45,7 +56,9 @@ class SettingController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $setting= Setting::where('id', $id)->get();
+        
+        return $setting->toJson();
     }
 
     /**
@@ -53,7 +66,11 @@ class SettingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $setting= Setting::find($id);
+
+        $setting-> name = $request->name;
+
+        $setting->save();
     }
 
     /**
