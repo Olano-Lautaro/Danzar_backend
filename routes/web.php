@@ -4,9 +4,11 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TutorController;
+use App\Models\Item;
 use App\Models\Payment;
 
 
@@ -34,6 +36,9 @@ Route::get('/token',function() {
     dd('llego');
 });
 
+
+Route::resource('items', ItemController::class);
+
 Route::resource('payments', PaymentController::class);
 
 Route::resource('categories', CategoryController::class);
@@ -42,4 +47,4 @@ Route::resource('students', StudentController::class);
 
 Route::resource('settings', SettingController::class);
 
-Route::resource('Tutors', TutorController::class);
+Route::resource('tutors', TutorController::class);
