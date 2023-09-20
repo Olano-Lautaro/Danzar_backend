@@ -25,12 +25,12 @@ function headerCors ( $response ){
 
 
 //TESTING BAUTISTA.
-Route::get('/paymentjson',function (){
-    $payment = Payment::all();
-    $response = response()->json($payment);
-    headerCors($response);
-    return $response;
-})->name('paymentjson'); 
+// Route::get('/paymentjson',function (){
+//     $payment = Payment::all();
+//     $response = response()->json($payment);
+//     headerCors($response);
+//     return $response;
+// })->name('paymentjson'); 
 
 Route::get('/token',function() {
     return csrf_token();
@@ -48,3 +48,10 @@ Route::resource('students', StudentController::class);
 Route::resource('settings', SettingController::class);
 
 Route::resource('tutors', TutorController::class);
+
+
+Route::get('/logintest',function (){
+    $response = response()->json();
+    headerCors($response);
+    dd($response);
+}); 
