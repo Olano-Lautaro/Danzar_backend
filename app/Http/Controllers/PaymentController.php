@@ -41,6 +41,18 @@ class PaymentController extends Controller
             'date' => $request-> date,
             'invoice_number' => $request-> invoice_number,
         ]);
+
+        $id_payment= $payment->id;
+        $items = $request->items;
+        
+        foreach ($items as $item) {
+
+            $payment->items()->attach($id_payment,[
+                "item_id" =>$item["item_id"],
+                "amount" =>$item["amount"]
+            ]);
+        }
+        
     }
 
     /**
