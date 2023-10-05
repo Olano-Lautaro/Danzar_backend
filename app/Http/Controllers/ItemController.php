@@ -89,7 +89,9 @@ class ItemController extends Controller
      */
     public function destroy(string $id)
     {
+        $item= Item::where('id',$id)->get();
         $item= Item::destroy($id);
+        return 'elemento eliminado';
     }
 }
 

@@ -72,9 +72,9 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        {
+            dd($id);
             Category::destroy($id);
             return ("Ha sido borrado");
-        } //Elimino el dato dependiendo el parametro ingresado ( ID )
+         //Elimino el dato dependiendo el parametro ingresado ( ID )
     }
 }
