@@ -41,6 +41,15 @@ class StudentController extends Controller
         $student->observations = $request->observations;
         $student->birthdate = $request->birthdate;
         $student->save();
+
+        $items = $request->items;
+        
+        foreach ($items as $item) {
+
+            $student->items()->attach($student->id,[
+                "item_id" =>$item["item_id"],
+            ]);
+        }
        
         return ($student);
     }
