@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
+use function Laravel\Prompts\alert;
+
 class StudentController extends Controller
 {
     /**
@@ -30,7 +32,6 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         
-
         
         $student = new Student();
         $student->name = $request->name;
@@ -40,16 +41,16 @@ class StudentController extends Controller
         $student->phone_number = $request->phone_number;
         $student->observations = $request->observations;
         $student->birthdate = $request->birthdate;
+    
         $student->save();
 
         $items = $request->items;
-        
         foreach ($items as $item) {
-
-            $student->items()->attach($student->id,[
-                "item_id" =>$item["item_id"],
+            $student->items()->attach($item,[
+                "student_id"=>$student->id
             ]);
         }
+        
        
         return ($student);
     }
