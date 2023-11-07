@@ -61,7 +61,14 @@ class StudentController extends Controller
     public function show(string $id)
     {
         $student = Student::WHERE('ID',$id)->get(); //Busco datos especificos con un id
-        return $student;
+
+        $items = $student->find($id)->items()->get();
+
+        $registro = [ 
+            "student" => $student[0], 
+            "items" => $items ];
+
+        return $registro;
     }
 
     /**
