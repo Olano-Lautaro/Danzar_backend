@@ -32,15 +32,14 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         
-        
         $student = new Student();
-        $student->name = $request->name;
-        $student->last_name = $request->last_name;
-        $student->address = $request->address;
-        $student->dni = $request->dni;
-        $student->phone_number = $request->phone_number;
-        $student->observations = $request->observations;
-        $student->birthdate = $request->birthdate;
+        $student->name = $request->student["name"];
+        $student->last_name = $request->student["last_name"];
+        $student->address = $request->student["address"];
+        $student->dni = $request->student["dni"];
+        $student->phone_number = $request->student["phone_number"];
+        $student->observations = $request->student["observations"];
+        $student->birthdate = $request->student["birthdate"];
     
         $student->save();
 
@@ -61,7 +60,15 @@ class StudentController extends Controller
     public function show(string $id)
     {
         $student = Student::WHERE('ID',$id)->get(); //Busco datos especificos con un id
-        return $student;
+
+        $items = $student->find($id)->items()->get();
+
+        $registro= [
+           "student" => $student[0],
+            "items" => $items
+        ];
+        
+        return $registro;
     }
 
     /**
@@ -70,8 +77,14 @@ class StudentController extends Controller
     public function edit(string $id)
     {
         $student = Student::where('id', $id)->get();
+        $items = $student->find($id)->items()->get();
 
-        return $student->toJson();
+        $registro= [
+            "student" => $student[0],
+             "items" => $items
+         ];
+
+        return $registro;
     }
 
     /**
@@ -81,12 +94,23 @@ class StudentController extends Controller
     {
 
         $student = Student::find($id);
-        $student->name = $request->name;
-        $student->last_name = $request->last_name;
-        $student->dni = $request->dni;
-        $student->phone_number = $request->phone_number;
-        $student->birthdate = $request->birthdate;
+        $student->name = $request->student["name"];
+        $student->last_name = $request->student["last_name"];
+        $student->address = $request->student["address"];
+        $student->dni = $request->student["dni"];
+        $student->phone_number = $request->student["phone_number"];
+        $student->observations = $request->student["observations"];
+        $student->birthdate = $request->student["birthdate"];
         $student->save();
+
+        $items = $request->items;
+        foreach ($items as $item) {
+            $student->items()->attach($item,[
+                "student_id"=>$student->id
+            ]);
+        }
+
+        
         return $student;
     }
 
