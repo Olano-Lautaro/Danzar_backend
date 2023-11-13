@@ -62,7 +62,14 @@ class PaymentController extends Controller
     {
         $payment = Payment::where('id', $id)->get();
 
-        return $payment->toJson();
+        $items = $payment->find($id)->items()->get();
+
+        $registro=[
+            "payment" => $payment,
+            "items" => $items
+        ];
+
+        return $registro;
     }
 
     /**
@@ -71,8 +78,15 @@ class PaymentController extends Controller
     public function edit(string $id)
     {
         $payment = Payment::where('id', $id)->get();
+
+        $items = $payment->find($id)->items()->get();
+
+        $registro=[
+            "payment" => $payment,
+            "items" => $items
+        ];
         
-        return $payment->toJson();
+        return $registro;
     }
 
     /**
@@ -94,6 +108,6 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-        $payment_delete = Payment::destroy($payment);
+         Payment::destroy($payment->id);
     }
 }
