@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use App\Models\Student;
 
 class PaymentController extends Controller
 {
@@ -12,9 +13,14 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        $payments= Payment::all();
-        
-        return $payments->toJson();
+
+
+        $payments = Payment::select('payments.*', 'students.name', 'students.last_name')
+            ->join('students', 'students.id', '=', 'payments.student_id')
+            ->get();
+
+
+        return $payments;
     }
 
     /**
@@ -37,22 +43,21 @@ class PaymentController extends Controller
         ]);
 
         $payment = Payment::create([
-            'student_id' => $request-> student_id,
-            'date' => $request-> date,
-            'invoice_number' => $request-> invoice_number,
+            'student_id' => $request->student_id,
+            'date' => $request->date,
+            'invoice_number' => $request->invoice_number,
         ]);
 
-        $id_payment= $payment->id;
+        $id_payment = $payment->id;
         $items = $request->items;
-        
+
         foreach ($items as $item) {
 
-            $payment->items()->attach($id_payment,[
-                "item_id" =>$item["item_id"],
-                "amount" =>$item["amount"]
+            $payment->items()->attach($id_payment, [
+                "item_id" => $item["item_id"],
+                "amount" => $item["amount"]
             ]);
         }
-        
     }
 
     /**
@@ -64,7 +69,7 @@ class PaymentController extends Controller
 
         $items = $payment->find($id)->items()->get();
 
-        $registro=[
+        $registro = [
             "payment" => $payment,
             "items" => $items
         ];
@@ -81,11 +86,11 @@ class PaymentController extends Controller
 
         $items = $payment->find($id)->items()->get();
 
-        $registro=[
+        $registro = [
             "payment" => $payment,
             "items" => $items
         ];
-        
+
         return $registro;
     }
 
@@ -98,7 +103,7 @@ class PaymentController extends Controller
 
         $payment->student_id = $request->student_id;
         $payment->date = $request->date;
-        $payment-> invoice_number = $request->invoice_number;
+        $payment->invoice_number = $request->invoice_number;
 
         $payment->save();
     }
@@ -108,6 +113,6 @@ class PaymentController extends Controller
      */
     public function destroy(Payment $payment)
     {
-         Payment::destroy($payment->id);
+        Payment::destroy($payment->id);
     }
 }

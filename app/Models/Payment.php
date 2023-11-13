@@ -23,7 +23,7 @@ class Payment extends Model
     }
 
     public function students():BelongsTo{
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(Student::class, "payments");
     }
 
 }
