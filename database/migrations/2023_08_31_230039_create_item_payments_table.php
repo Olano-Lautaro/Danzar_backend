@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer("amount");
 
             $table->foreign('item_id')->references('id')->on('items');
-            $table->foreign('payment_id')->references('id')->on('payments');
+            $table->foreign('payment_id')->references('id')->on('payments')->onDelete('cascade');
 
             $table->timestamps();
         });
