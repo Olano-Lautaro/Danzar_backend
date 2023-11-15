@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use function Laravel\Prompts\alert;
 
@@ -31,7 +32,7 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $student = new Student();
         $student->name = $request->student["name"];
         $student->last_name = $request->student["last_name"];
@@ -40,17 +41,17 @@ class StudentController extends Controller
         $student->phone_number = $request->student["phone_number"];
         $student->observations = $request->student["observations"];
         $student->birthdate = $request->student["birthdate"];
-    
+
         $student->save();
 
         $items = $request->items;
         foreach ($items as $item) {
-            $student->items()->attach($item,[
-                "student_id"=>$student->id
+            $student->items()->attach($item, [
+                "student_id" => $student->id
             ]);
         }
-        
-       
+
+
         return ($student);
     }
 
@@ -59,13 +60,15 @@ class StudentController extends Controller
      */
     public function show(string $id)
     {
-        $student = Student::WHERE('ID',$id)->get(); //Busco datos especificos con un id
+        $student = Student::WHERE('ID', $id)->get(); //Busco datos especificos con un id
         $items = $student->find($id)->items()->get();
+        
 
-        $registro= [
+
+        $registro = [
             "student" => $student[0],
             "items" => $items
-         ];
+        ];
 
         return $registro;
     }
@@ -78,12 +81,12 @@ class StudentController extends Controller
         $student = Student::where('id', $id)->get();
         $items = $student->find($id)->items()->get();
 
-        
 
-        $registro= [
+
+        $registro = [
             "student" => $student[0],
             "items" => $items
-         ];
+        ];
 
         return $registro;
     }
@@ -106,12 +109,12 @@ class StudentController extends Controller
 
         $items = $request->items;
         foreach ($items as $item) {
-            $student->items()->attach($item,[
-                "student_id"=>$student->id
+            $student->items()->attach($item, [
+                "student_id" => $student->id
             ]);
         }
 
-        
+
         return $student;
     }
 
@@ -120,9 +123,21 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
+        //si el student tiene relacionado algun item, payment no podrás ser eliminado.
         
-           Student::destroy($id);
-            return ("Borrado con exito");
-        
+
+
+        // $studentRelations = 
+        // Student::select('students.*')
+        // ->join('payments','payments.student_id','=','student.id')
+        // ->get();
+
+
+        // dd($studentRelations);
+
+
+
+        Student::destroy($id);
+        return ("Borrado con exito");
     }
 }

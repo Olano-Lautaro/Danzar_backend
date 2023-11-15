@@ -19,7 +19,7 @@ class Payment extends Model
     ];
 
     public function items():BelongsToMany{
-        return $this->belongsToMany(Item::class, "item_payments");
+        return $this->belongsToMany(Item::class, "item_payment");
     }
 
     public function students():BelongsTo{
