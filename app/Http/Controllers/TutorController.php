@@ -46,6 +46,9 @@ class TutorController extends Controller
             'dni'=> $request->dni  
         ]);
 
+        $tutor->students()->attach($tutor->id,[
+            "student_id" => $request->student_id
+        ]);
     }
 
     /**
@@ -55,7 +58,16 @@ class TutorController extends Controller
     {
         $tutor = Tutor::where('id', $id)->get();
 
-        return $tutor->toJson();
+        // $tutor->students()->where('tutor_id',$id)->get();
+
+        $student = $tutor->find($id)->students()->get();
+
+        $registro= [
+            "tutor" => $tutor[0],
+            "student"=> $student[0]
+        ];
+
+        return $registro;
     }
 
     /**

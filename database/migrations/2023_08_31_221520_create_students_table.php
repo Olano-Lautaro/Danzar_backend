@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('dni')->unique();
             $table->string('phone_number');
+            $table->boolean('status');
             $table->string('observations')->nullable();
             $table->date('birthdate')->nullable();
             $table->timestamps();

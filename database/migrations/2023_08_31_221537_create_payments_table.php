@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('student_id');
             $table->date("date");
-            $table->integer("invoice_number"); //numero de factura o recibo
+            $table->integer("amount"); //numero de factura o recibo
 
             $table->foreign('student_id')->references('id')->on('students');
             $table->timestamps();

@@ -16,7 +16,8 @@ class Student extends Model
         'last_name',
         'address',
         'dni',
-        'phone_number', 
+        'phone_number',
+        'status',
         'observations',     
         'birthdate'                                     
     ];

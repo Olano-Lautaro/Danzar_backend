@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use App\Models\Student;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Date;
 
 class PaymentController extends Controller
 {
@@ -38,14 +40,15 @@ class PaymentController extends Controller
     {
         $request->validate([
             'student_id' => 'required',
-            'date' => 'required',
-            'invoice_number' => 'required'
+            // 'date' => 'required',
         ]);
 
+        $currentDate= new Carbon;
+        
         $payment = Payment::create([
             'student_id' => $request->student_id,
-            'date' => $request->date,
-            'invoice_number' => $request->invoice_number,
+            'date' => $currentDate->now()->format('Y-m-d'),
+            'amount' => $request->amount,
         ]);
 
         $id_payment = $payment->id;
@@ -54,8 +57,8 @@ class PaymentController extends Controller
         foreach ($items as $item) {
 
             $payment->items()->attach($id_payment, [
-                "item_id" => $item["item_id"],
-                "amount" => $item["amount"]
+                "item_id" => $item['item_id'],
+                "amount" => $item['amount']
             ]);
         }
     }
@@ -66,6 +69,8 @@ class PaymentController extends Controller
     public function show(string $id)
     {
         $payment = Payment::where('id', $id)->get();
+
+        
 
         $items = $payment->find($id)->items()->get();
 
@@ -103,7 +108,7 @@ class PaymentController extends Controller
 
         $payment->student_id = $request->student_id;
         $payment->date = $request->date;
-        $payment->invoice_number = $request->invoice_number;
+        $payment->amount= $request->amount;
 
         $payment->save();
     }

@@ -39,6 +39,7 @@ class StudentController extends Controller
         $student->address = $request->student["address"];
         $student->dni = $request->student["dni"];
         $student->phone_number = $request->student["phone_number"];
+        $student->status = true; 
         $student->observations = $request->student["observations"];
         $student->birthdate = $request->student["birthdate"];
 
@@ -105,9 +106,13 @@ class StudentController extends Controller
         $student->phone_number = $request->student["phone_number"];
         $student->observations = $request->student["observations"];
         $student->birthdate = $request->student["birthdate"];
+        $student->status = $request->student["status"];
         $student->save();
 
         $items = $request->items;
+        
+        DB::table('item_student')->where('student_id',$id)->delete();
+
         foreach ($items as $item) {
             $student->items()->attach($item, [
                 "student_id" => $student->id
